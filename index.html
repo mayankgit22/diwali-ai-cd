@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Diwali</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #282c34;
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            margin-top: 50px;
+            font-size: 50px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .firework, .skyshot {
+            position: absolute;
+            pointer-events: none;
+            animation: explode 1s forwards;
+        }
+        @keyframes explode {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎆 Happy Diwali! 🎇</h1>
+    <p>Enter your name to get a personalized Diwali greeting:</p>
+    
+    <input type="text" id="nameInput" placeholder="Your Name" value="Pulkit">
+    <button onclick="sayHappyDiwali()">Get Greeting</button>
+
+    <h2 id="greetingMessage" style="color: #ff6600; margin-top: 20px;"></h2>
+
+    <script>
+        function sayHappyDiwali() {
+            const nameInput = document.getElementById('nameInput').value.trim();
+            const name = nameInput === "" ? "Pulkit" : nameInput;
+            document.getElementById('greetingMessage').textContent = `Happy Diwali, ${name}! 🎉`;
+        }
+
+        function createFirework(x, y) {
+            const firework = document.createElement("img");
+            firework.src = "https://img.icons8.com/color/512/sparkler.png"; // Firecracker image
+            firework.style.width = "50px"; // Adjust size as needed
+            firework.style.position = "absolute";
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+            firework.style.pointerEvents = "none";
+            document.body.appendChild(firework);
+
+            // Remove firework after some time
+            setTimeout(() => {
+                firework.remove();
+            }, 1000);
+        }
+
+        function createSkyShot(x, y) {
+            const skyShot = document.createElement("img");
+            skyShot.src = "https://img.icons8.com/emoji/512/fireworks.png"; // Sky shot image
+            skyShot.style.width = "100px"; // Adjust size as needed
+            skyShot.style.position = "absolute";
+            skyShot.style.left = `${x}px`;
+            skyShot.style.top = `${y - 50}px`; // Adjust position for the sky shot effect
+            skyShot.style.pointerEvents = "none";
+            document.body.appendChild(skyShot);
+
+            // Remove sky shot after some time
+            setTimeout(() => {
+                skyShot.remove();
+            }, 1000);
+        }
+
+        // Trigger fireworks or sky shots on click
+        document.body.addEventListener("click", (event) => {
+            const randomEffect = Math.random() < 0.5; // 50% chance for firecracker or sky shot
+            if (randomEffect) {
+                createFirework(event.pageX, event.pageY);
+            } else {
+                createSkyShot(event.pageX, event.pageY);
+            }
+        });
+    </script>
+
+</body>
+</html>
